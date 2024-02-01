@@ -26,8 +26,17 @@ def pairwise_distance(Is):
     distance between pairs of shreds. Specifically, dist[i,j] contains the
     distance when strip j is just to the left of strip i. 
     '''
+
     dist = np.ones((len(Is), len(Is)))
     # write your code here
+    for i in range(len(Is)):
+        for j in range(len(Is)):
+            if i != j:
+                sum_double = 0
+                for k in range(Is[i].shape[0]):
+                    diff = (Is[i][k, 0] - Is[j][k, -1])  # 计算RGB差值
+                    sum_double += np.sum(diff ** 2)
+                dist[i, j] = sum_double
     return dist
 
 
