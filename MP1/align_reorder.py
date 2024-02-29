@@ -4,7 +4,7 @@ import numpy as np
 from absl import flags, app
 
 FLAGS = flags.FLAGS
-flags.DEFINE_string('test_name_hard', 'hard_nature',
+flags.DEFINE_string('test_name_hard', 'scan_dogs',
                     'what set of shreads to load')
 
 
@@ -25,11 +25,24 @@ def min_distance(img1, img2):
         start_idx = max(0, -current_offst)
         end_idx = min(img1.shape[0], img2.shape[0] - current_offst)
         if end_idx > start_idx:  # 确保有有效范围
-            pixel_number = end_idx - start_idx + 1
-            diff = img1[start_idx:end_idx, 0] - img2[start_idx + current_offst:end_idx + current_offst, -1]
-            sum_double = np.sum(diff ** 2) / pixel_number
-            if sum_double < min_dist:
-                min_dist = sum_double
+            # pixel_number = end_idx - start_idx + 1
+            # diff = img1[start_idx:end_idx, 0] - img2[start_idx + current_offst:end_idx + current_offst, -1]
+            # sum_double = np.sum(diff ** 2) / pixel_number
+            # 提取相关片段
+            distance = 0
+            for i in range(3):
+                A = img1[start_idx:end_idx, i]
+                B = img2[start_idx + current_offst:end_idx + current_offst, -1-i]
+                mean_A = np.mean(A)
+                mean_B = np.mean(B)
+                norm_A = A - mean_A
+                norm_B = B - mean_B
+                numerator = np.sum(norm_A * norm_B)
+                denominator = np.sqrt(np.sum(norm_A ** 2) * np.sum(norm_B ** 2))
+                zncc = numerator / denominator if denominator != 0 else 0
+                distance += 1 - zncc
+            if distance < min_dist:
+                min_dist = distance
                 min_offst = current_offst
 
     return min_dist, min_offst
