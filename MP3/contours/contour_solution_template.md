@@ -15,10 +15,10 @@
    | Method | overall max F-score | average max F-score | AP | Runtime (seconds) |
    | ----------- | --- | --- | ---  | --- |
    | Initial implementation | 0.450 | 0.516 | 0.385 | 0.010 |
-   | Warm-up [remove boundary artifacts] | | | | |
-   | Smoothing | | | | |
-   | Non-maximum Suppression | | | | 
-   | Val set numbers of best model [From gradescope] | | | |
+   | noGuassian | 0.477 | 0.551 | 0.451 | 0.010 |
+   | Smoothing | 0.510 | 0.580 | 0.532 | 0.012 |
+   | Non-maximum Suppression | 0.589 | 0.630 | 0.585 |0.154|
+   | Val set numbers of best model | 0.611 | 0.643 | 0.617 |5.41|
 
 4. **Visualizations.** *TODO:* Include visualization on 3 images from val set showing the impact of your implementation for each part. Describe the effect of your implementation for each part on these images by pointing to relevant image regions. Comment on where does your code work well, where it doesn't and why? You may also add visualizations of your own images. Here is how you can lay out images in markdown.
    <div align="center">
